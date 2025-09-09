@@ -1,0 +1,40 @@
+name: Deploy CMP Web to Vercel
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v3
+
+      - name: Build CMP Web (WASM)
+        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+
+      - name: Prepare public folder
+        run: |
+          rm -rf public
+          mkdir -p public
+          cp -R composeApp/build/dist/wasmJs/productionExecutable/* public/
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel
+
+      - name: Pull Vercel Env/Project settings
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=production
+
+      - name: Deploy (prod) from repo root
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prod --yes
