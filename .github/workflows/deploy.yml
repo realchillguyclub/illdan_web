@@ -3,13 +3,10 @@ name: Deploy CMP Web to Vercel
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]  # PR엔 프리뷰 배포
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
 
@@ -20,31 +17,24 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v3
 
-      # CMP Web WASM 빌드
       - name: Build CMP Web (WASM)
         run: ./gradlew :composeApp:wasmJsBrowserDistribution
 
-      # Vercel CLI 설치
+      - name: Prepare public folder
+        run: |
+          rm -rf public
+          mkdir -p public
+          cp -R composeApp/build/dist/wasmJs/productionExecutable/* public/
+
       - name: Install Vercel CLI
         run: npm i -g vercel
 
-      - name: Pull Vercel Env
+      - name: Pull Vercel Env/Project settings
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: vercel pull --yes --environment=${{ github.event_name == 'push' && 'production' || 'preview' }}
+        run: vercel pull --yes --environment=production
 
-      # 배포 경로 지정(정적 산출물만 업로드)
-      - name: Deploy to Vercel
+      - name: Deploy (prod) from repo root
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          DIST=composeApp/build/dist/wasmJs/productionExecutable
-          if [ "${{ github.event_name }}" = "push" ]; then
-            # 프로덕션 배포 (main)
-            vercel deploy "$DIST" --prod --yes
-          else
-            # 프리뷰 배포 (PR)
-            vercel deploy "$DIST" --yes
-          fi
+        run: vercel deploy --prod --yes
