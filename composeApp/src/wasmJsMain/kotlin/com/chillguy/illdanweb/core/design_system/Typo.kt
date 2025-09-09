@@ -56,7 +56,7 @@ data class AppTypography(
 fun appTypo(): AppTypography {
     val fontFamily = appFontFamily()
 
-    fun lh(size: Int) = (size * 1.4f).sp
+    fun lh(size: Int) = (size * 1.5f).sp
 
     return AppTypography(
         titleLargeL = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Light, fontSize = 42.sp, lineHeight = lh(42)),
