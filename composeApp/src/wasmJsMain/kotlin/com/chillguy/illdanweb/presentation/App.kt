@@ -4,8 +4,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +48,8 @@ import illdanweb.composeapp.generated.resources.content2
 import illdanweb.composeapp.generated.resources.content3
 import illdanweb.composeapp.generated.resources.content4
 import illdanweb.composeapp.generated.resources.ic_app
+import illdanweb.composeapp.generated.resources.ic_app_store
+import illdanweb.composeapp.generated.resources.ic_play_store
 
 @Composable
 fun App() {
@@ -60,26 +66,39 @@ fun App() {
     }
 
     AppTheme {
-        Box(
+        BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
-                .background(brush)
         ) {
-            WebContent(
-                scrollState = scroll
+            val gradientBrush = Brush.verticalGradient(
+                colors = listOf(
+                    BACKGROUND4,
+                    BACKGROUND3,
+                    BACKGROUND2,
+                    BACKGROUND1
+                ),
+                startY = 0f,
+                endY = constraints.maxHeight.toFloat() * 2f
             )
+
+            Column(
+                modifier = Modifier
+                    .verticalScroll(scroll)
+                    .background(gradientBrush)
+                    .fillMaxWidth()
+            ) {
+                WebContent()
+            }
         }
     }
 }
 
 @Composable
 fun WebContent(
-    scrollState: ScrollState
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(scrollState),
     ) {
         Spacer(modifier = Modifier.height(192.dp))
 
@@ -186,6 +205,37 @@ fun AppDownloadSection(
             style = AppTextStyle.TempTitle,
             color = BLACK
         )
+
+        Spacer(modifier = Modifier.height(80.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(Res.drawable.ic_play_store),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(width = 235.dp, height =70.dp)
+                    .clickable {
+
+                    }
+            )
+
+            Spacer(modifier = Modifier.width(60.dp))
+
+            Image(
+                painter = painterResource(Res.drawable.ic_app_store),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(width = 235.dp, height =70.dp)
+                    .clickable {
+
+                    }
+            )
+        }
     }
 }
 
