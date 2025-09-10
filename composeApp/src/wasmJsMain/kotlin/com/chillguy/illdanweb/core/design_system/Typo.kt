@@ -31,6 +31,10 @@ fun appFontFamily() = FontFamily(
 )
 
 data class AppTypography(
+    val tempTitle: TextStyle,
+    val tempBody: TextStyle,
+    val tempContent: TextStyle,
+
     val titleLargeL: TextStyle,
     val titleLargeM: TextStyle,
     val titleLargeR: TextStyle,
@@ -59,6 +63,11 @@ fun appTypo(): AppTypography {
     fun lh(size: Int) = (size * 1.5f).sp
 
     return AppTypography(
+        tempTitle = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.ExtraBold, fontSize = 58.sp, lineHeight = lh(58)),
+        tempBody = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Medium, fontSize = 36.sp, lineHeight = lh(40)),
+        tempContent = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Medium, fontSize = 32.sp, lineHeight = lh(32)),
+
+
         titleLargeL = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Light, fontSize = 42.sp, lineHeight = lh(42)),
         titleLargeM = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Medium, fontSize = 60.sp, lineHeight = lh(60)),
         titleLargeR = TextStyle(fontFamily = fontFamily, fontWeight = FontWeight.Normal, fontSize = 32.sp, lineHeight = lh(32)),

@@ -29,5 +29,8 @@ fun AppTextStyle.toTextStyle(): TextStyle {
         AppTextStyle.BodySmallR1 -> typo.bodySmallR1
         AppTextStyle.BodySmallR2 -> typo.bodySmallR2
         AppTextStyle.BodySmallR3 -> typo.bodySmallR3
+        AppTextStyle.TempTitle -> typo.tempTitle
+        AppTextStyle.TempBody -> typo.tempBody
+        AppTextStyle.TempContent -> typo.tempContent
     }
 }

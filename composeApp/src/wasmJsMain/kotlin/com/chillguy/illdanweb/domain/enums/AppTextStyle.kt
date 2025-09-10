@@ -20,4 +20,8 @@ enum class AppTextStyle {
     BodySmallR1,
     BodySmallR2,
     BodySmallR3,
+
+    TempTitle,
+    TempBody,
+    TempContent
 }
