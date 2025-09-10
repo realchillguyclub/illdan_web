@@ -25,16 +25,14 @@ jobs:
           rm -rf public
           mkdir -p public
           cp -R composeApp/build/dist/wasmJs/productionExecutable/* public/
+          # SPA 라우팅 적용 위해 vercel.json도 포함
+          if [ -f vercel.json ]; then cp vercel.json public/; fi
 
       - name: Install Vercel CLI
         run: npm i -g vercel
 
-      - name: Pull Vercel Env/Project settings
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: vercel pull --yes --environment=production
+      - name: Pull env (prod)
+        run: vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy (prod) from repo root
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: vercel deploy --prod --yes
+      - name: Deploy (prod)
+        run: vercel deploy public --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
