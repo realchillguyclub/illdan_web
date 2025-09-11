@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.chillguy.illdanweb.core.design_system.AppColor.BACKGROUND1
@@ -47,6 +48,7 @@ import illdanweb.composeapp.generated.resources.content1
 import illdanweb.composeapp.generated.resources.content2
 import illdanweb.composeapp.generated.resources.content3
 import illdanweb.composeapp.generated.resources.content4
+import illdanweb.composeapp.generated.resources.content5
 import illdanweb.composeapp.generated.resources.ic_app
 import illdanweb.composeapp.generated.resources.ic_app_store
 import illdanweb.composeapp.generated.resources.ic_play_store
@@ -159,12 +161,12 @@ fun WebContent(
         Spacer(modifier = Modifier.height(216.dp))
 
         Image(
-            painter = painterResource(Res.drawable.content4),
+            painter = painterResource(Res.drawable.content5),
             contentDescription = null,
             modifier = Modifier
                 .width(837.dp)
                 .height(996.dp)
-                .padding(horizontal = 80.dp)
+                .padding(horizontal = 60.dp)
                 .align(Alignment.End)
         )
 
@@ -176,6 +178,8 @@ fun WebContent(
 fun AppDownloadSection(
 
 ) {
+    val uriHandler = LocalUriHandler.current
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -220,7 +224,7 @@ fun AppDownloadSection(
                 modifier = Modifier
                     .size(width = 235.dp, height =70.dp)
                     .clickable {
-
+                        uriHandler.openUri("https://illdan-redirect.vercel.app/")
                     }
             )
 
@@ -232,7 +236,7 @@ fun AppDownloadSection(
                 modifier = Modifier
                     .size(width = 235.dp, height =70.dp)
                     .clickable {
-
+                        uriHandler.openUri("https://illdan-redirect.vercel.app/")
                     }
             )
         }
