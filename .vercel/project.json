@@ -1,16 +1,1 @@
-{
-  "projectId": "prj_WX4EYAg8D3mgdcyhsmzAzRjlbiNJ",
-  "orgId": "team_8xvQzgn2gmHYCFSR33ypVVfQ",
-  "projectName": "illdan-web",
-  "settings": {
-    "createdAt": 1757404556295,
-    "framework": null,
-    "devCommand": null,
-    "installCommand": null,
-    "buildCommand": null,
-    "outputDirectory": null,
-    "rootDirectory": "composeApp/build/dist/wasmJs/productionExecutable",
-    "directoryListing": false,
-    "nodeVersion": "22.x"
-  }
-}
+{"projectId":"prj_WX4EYAg8D3mgdcyhsmzAzRjlbiNJ","orgId":"team_8xvQzgn2gmHYCFSR33ypVVfQ","projectName":"illdan-web"}
