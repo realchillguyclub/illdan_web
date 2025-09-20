@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '21'
 
       - uses: gradle/actions/setup-gradle@v3
@@ -20,18 +20,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - run: npm i -g vercel
 
-      - name: Build CMP Web (WASM)
-        run: ./gradlew :composeApp:wasmJsBrowserDistribution
+      # Vercel 프로젝트/환경 끌어오기
+      - run: vercel pull --yes --environment=production --token ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Prepare public folder
-        run: |
-          rm -rf public
-          mkdir -p public
-          cp -R composeApp/build/dist/wasmJs/productionExecutable/* public/
-          if [ -f vercel.json ]; then cp vercel.json public/; fi
+      # vercel.json의 buildCommand/outputDirectory로 로컬 빌드
+      - run: vercel build --prod --token ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Deploy to Vercel (prod)
-        run: vercel deploy public --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
+      # 사전빌드물 배포
+      - run: vercel deploy --prebuilt --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
