@@ -150,6 +150,16 @@ fun App() {
                     )
 
                     Spacer(Modifier.height(216.dp))
+
+                    ResponsiveImage(
+                        res = Res.drawable.content5,
+                        aspectRatio = 837f / 996f,
+                        align = Alignment.End,
+                        fillFraction = wf(bp, compact = 1.0f, medium = 0.76f, expanded = 0.70f),
+                        maxWidthDp = 837.dp
+                    )
+
+                    Spacer(Modifier.height(scale.bottomSpace))
                 }
             }
         }
